@@ -58,7 +58,7 @@ imagePicker = new ImagePicker(getActivity(),
                         1 /*aspect ratio y*/);
 ```
 
-Oerriden methods should be in your Fragment
+Overriden methods should be in your Fragment
 
 ```java
 @Override
