@@ -16,11 +16,11 @@ imagePicker = new ImagePicker(this, /* activity non null*/
                 })
                 .setWithImageCrop(
                         1 /*aspect ratio x*/
-                        1 /*aspect ratio y/
+                        1 /*aspect ratio y*/);
 ```
 
 ### If calling from Activity
-Oerride Activity's methods to delegate permissions to ImagePicker and resulting image
+Override Activity's methods to delegate permissions to ImagePicker and resulting image
 ```java
 @Override
 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -55,7 +55,7 @@ imagePicker = new ImagePicker(getActivity(),
                 })
                 .setWithImageCrop(
                         1 /*aspect ratio x*/
-                        1 /*aspect ratio y/
+                        1 /*aspect ratio y*/);
 ```
 
 Oerriden methods should be in your Fragment
