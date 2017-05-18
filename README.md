@@ -88,3 +88,5 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     }
 }
 ```
+
+You can get a sample app [here](https://github.com/IhorKlimov/SmartImagePicker)
