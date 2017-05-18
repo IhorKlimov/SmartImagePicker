@@ -12,7 +12,7 @@ compile 'com.myhexaville:smart-image-picker:1.0'
 imagePicker = new ImagePicker(this, /* activity non null*/
                 null, /* fragment nullable*/
                 imageUri -> {/*on image picked */
-                    binding.image.setImageURI(imageUri);
+                    imageView.setImageURI(imageUri);
                 })
                 .setWithImageCrop(
                         1 /*aspect ratio x*/
@@ -51,7 +51,7 @@ Create instance
 imagePicker = new ImagePicker(getActivity(),
                 this,
                 imageUri -> {/*on image picked */
-                    binding.image.setImageURI(imageUri);
+                    imageView.setImageURI(imageUri);
                 })
                 .setWithImageCrop(
                         1 /*aspect ratio x*/
