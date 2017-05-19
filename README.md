@@ -89,5 +89,5 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 }
 ```
 
-### You can get a sample app [here](https://github.com/IhorKlimov/SmartImagePicker/app)
+### You can get a sample app [here](https://github.com/IhorKlimov/SmartImagePicker/tree/master/app)
 ### You don't need to add any permissions to manifest, everything is merged automatically from library's manifest file
