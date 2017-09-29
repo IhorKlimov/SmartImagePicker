@@ -198,8 +198,8 @@ public class ImagePicker {
         Log.d(LOG_TAG, "handleCroppedImageResult: ");
         CropImage.ActivityResult result = CropImage.getActivityResult(data);
         Uri croppedImageUri = result.getUri();
-        listener.onImagePicked(croppedImageUri);
         imageFile = new File(croppedImageUri.getPath());
+        listener.onImagePicked(croppedImageUri);
     }
 
     @SuppressLint("NewApi")
