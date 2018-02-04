@@ -178,6 +178,7 @@ public class ImagePicker {
     }
 
     @SuppressWarnings({"WeakerAccess", "unused"})
+    @NonNull
     public File getImageFile() {
         return imageFile;
     }
@@ -210,6 +211,7 @@ public class ImagePicker {
                     .setAspectRatio(aspectRatioX, aspectRatioY)
                     .start(activity);
         } else {
+            imageFile = new File(imageUri.getPath());
             listener.onImagePicked(imageUri);
         }
     }
