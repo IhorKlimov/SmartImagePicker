@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.app.Activity.RESULT_OK;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static com.theartofdev.edmodo.cropper.CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE;
@@ -187,7 +186,7 @@ public class ImagePicker {
         Log.d(TAG, "handleCroppedImageResult: ");
         CropImage.ActivityResult result = CropImage.getActivityResult(data);
         Uri croppedImageUri = result.getUri();
-        deletePreviousCropFiles(croppedImageUri);
+        deletePreviouslyCroppedFiles(croppedImageUri);
         imageFile = new File(croppedImageUri.getPath());
         listener.onImagePicked(croppedImageUri);
     }
@@ -231,17 +230,17 @@ public class ImagePicker {
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void deletePreviousCropFiles(Uri currentCropImageUri) {
-        Log.d(TAG, "deletePreviousCropFiles: " + currentCropImageUri);
+    private void deletePreviouslyCroppedFiles(Uri currentCropImageUri) {
+        Log.d(TAG, "deletePreviouslyCroppedFiles: " + currentCropImageUri);
         String croppedImageName = currentCropImageUri.getLastPathSegment();
         File imagePath = activity.getCacheDir();
-        Log.d(TAG, "deletePreviousCropFiles: " + imagePath.exists() + " " + imagePath.isDirectory());
+        Log.d(TAG, "deletePreviouslyCroppedFiles: " + imagePath.exists() + " " + imagePath.isDirectory());
         if (imagePath.exists() && imagePath.isDirectory()) {
-            Log.d(TAG, "deletePreviousCropFiles: " + imagePath.toString());
-            Log.d(TAG, "deletePreviousCropFiles: " + imagePath.listFiles().length);
+            Log.d(TAG, "deletePreviouslyCroppedFiles: " + imagePath.toString());
+            Log.d(TAG, "deletePreviouslyCroppedFiles: " + imagePath.listFiles().length);
             if (imagePath.listFiles().length > 0) {
                 for (File file : imagePath.listFiles()) {
-                    Log.d(TAG, "deletePreviousCropFiles: " + file.getName());
+                    Log.d(TAG, "deletePreviouslyCroppedFiles: " + file.getName());
                     if (!file.getName().equals(croppedImageName)) {
                         file.delete();
                     }
