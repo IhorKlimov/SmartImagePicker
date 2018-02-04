@@ -3,7 +3,7 @@
 ## Usage
 Add this line to build.gradle
 ```groovy
-compile 'com.myhexaville:smart-image-picker:1.0'
+compile 'com.myhexaville:smart-image-picker:1.0.1'
 ```
 
 
