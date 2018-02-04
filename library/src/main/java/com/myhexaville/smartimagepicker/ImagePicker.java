@@ -188,8 +188,8 @@ public class ImagePicker {
         CropImage.ActivityResult result = CropImage.getActivityResult(data);
         Uri croppedImageUri = result.getUri();
         deletePreviousCropFiles(croppedImageUri);
-        listener.onImagePicked(croppedImageUri);
         imageFile = new File(croppedImageUri.getPath());
+        listener.onImagePicked(croppedImageUri);
     }
 
     @SuppressLint("NewApi")
