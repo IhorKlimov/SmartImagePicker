@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.myhexaville.androidimagepicker.R;
@@ -13,7 +14,7 @@ import com.myhexaville.smartimagepicker.ImagePicker;
 
 
 public class ActivityExample extends AppCompatActivity {
-
+    private static final String TAG = "ActivityExample";
     private ImagePicker imagePicker;
     private MainLayoutBinding binding;
 
@@ -55,6 +56,7 @@ public class ActivityExample extends AppCompatActivity {
         imagePicker = new ImagePicker(this,
                 null,
                 imageUri -> {
+                    Log.d(TAG, "refreshImagePicker: "+ imageUri);
                     binding.image.setImageURI(imageUri);
                 });
         if (binding.withCrop.isChecked()) {

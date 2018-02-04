@@ -3,7 +3,7 @@
 ## Usage
 Add this line to build.gradle
 ```groovy
-compile 'com.myhexaville:smart-image-picker:1.0'
+compile 'com.myhexaville:smart-image-picker:1.0.2'
 ```
 
 
@@ -43,7 +43,7 @@ First one opens camera directly, second shows an intent picker, where user picks
 
 That's it, if you don't need to crop image, don't call *setImageCrop()*  in the chain. By default it's disabled. And if you want to get a file after you picked image, you can get it with this method
 ```java
-File file = imagePicker.getImageFiel();
+File file = imagePicker.getImageFile();
 ```
 ### If calling from Fragment 
 Create instance 
