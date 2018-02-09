@@ -40,18 +40,17 @@ import static com.theartofdev.edmodo.cropper.CropImage.getGalleryIntents;
  * and call {@link Fragment#onActivityResult(int, int, Intent)} for your fragment to delegate result
  */
 public class ImagePicker {
-    private static final String TAG = "PhotoPicker";
+    private static final String TAG = "ImagePicker";
     private static final int CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE_WITH_CAMERA = 100;
     private static final int CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE_WITHOUT_CAMERA = 101;
+
     private static String currentCameraFileName = "";
     private OnImagePickedListener listener;
     private Activity activity;
     private Fragment fragment;
 
-    private Uri cropImageUri;
     private File imageFile;
-    private int aspectRatioX;
-    private int aspectRatioY;
+    private int aspectRatioX, aspectRatioY;
     private boolean withCrop;
 
     public ImagePicker(Activity activity, @Nullable Fragment fragment, OnImagePickedListener listener) {
@@ -141,19 +140,6 @@ public class ImagePicker {
             } else {
                 Toast.makeText(activity, R.string.canceling, Toast.LENGTH_SHORT).show();
             }
-        } else if (requestCode == CropImage.PICK_IMAGE_PERMISSIONS_REQUEST_CODE) {
-            if (cropImageUri != null && grantResults.length > 0 && grantResults[0] == PERMISSION_GRANTED) {
-                if (withCrop) {
-                    CropImage.activity(cropImageUri)
-                            .setGuidelines(CropImageView.Guidelines.ON)
-                            .setAspectRatio(aspectRatioX, aspectRatioY)
-                            .start(activity);
-                } else {
-                    listener.onImagePicked(cropImageUri);
-                }
-            } else {
-                Toast.makeText(activity, R.string.canceling, Toast.LENGTH_SHORT).show();
-            }
         }
     }
 
@@ -203,7 +189,6 @@ public class ImagePicker {
             deletePreviousCameraFiles();
         }
         Log.d(TAG, "handlePickedImageResult: " + imageUri);
-        Log.d(TAG, "onActivityResult: " + imageUri);
         if (withCrop) {
             CropImage.activity(imageUri)
                     .setGuidelines(CropImageView.Guidelines.ON)

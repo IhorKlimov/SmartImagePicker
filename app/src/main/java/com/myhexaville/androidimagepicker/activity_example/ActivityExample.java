@@ -57,6 +57,7 @@ public class ActivityExample extends AppCompatActivity {
                 null,
                 imageUri -> {
                     Log.d(TAG, "refreshImagePicker: "+ imageUri);
+                    Log.d(TAG, "refreshImagePicker: "+ imagePicker.getImageFile().getName());
                     binding.image.setImageURI(imageUri);
                 });
         if (binding.withCrop.isChecked()) {
