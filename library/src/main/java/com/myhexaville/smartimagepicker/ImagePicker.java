@@ -39,7 +39,7 @@ import static com.theartofdev.edmodo.cropper.CropImage.getGalleryIntents;
  * If calling from Fragment, override {@link Activity#onActivityResult(int, int, Intent)}
  * and call {@link Fragment#onActivityResult(int, int, Intent)} for your fragment to delegate result
  */
-public class ImagePicker implements ImagePickerContract{
+public class ImagePicker implements ImagePickerContract {
     private static final String TAG = "ImagePicker";
     private static final int CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE_WITH_CAMERA = 100;
     private static final int CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE_WITHOUT_CAMERA = 101;
@@ -90,11 +90,10 @@ public class ImagePicker implements ImagePickerContract{
     @Override
     public void openCamera() {
         if (needToAskPermissions()) {
-            String[] permissions = getNeededPermissions();
             if (fragment != null) {
-                fragment.requestPermissions(permissions, CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
+                fragment.requestPermissions(getNeededPermissions(), CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
             } else {
-                activity.requestPermissions(permissions, CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
+                activity.requestPermissions(getNeededPermissions(), CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
             }
         } else {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -256,7 +255,11 @@ public class ImagePicker implements ImagePickerContract{
         Log.d(TAG, "openCamera: file exists " + file.exists() + " " + file.toURI().toString());
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        final Uri outputUri = FileProvider.getUriForFile(activity.getApplicationContext(), "com.myhexaville.smartimagepicker", file);
+        String authority = activity.getPackageName() + ".smart-image-picket-provider";
+        final Uri outputUri = FileProvider.getUriForFile(
+                activity.getApplicationContext(),
+                authority,
+                file);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
         activity.grantUriPermission(
                 "com.google.android.GoogleCamera",
