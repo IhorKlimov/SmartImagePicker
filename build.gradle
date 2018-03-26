@@ -5,7 +5,7 @@ buildscript {
     ext.buildToolsVersion = '27.0.2'
     ext.minSdkVersion = 16
     ext.targetSdkVersion = 27
-    ext.supportLibraryVersion = '27.0.2'
+    ext.supportLibraryVersion = '27.1.0'
 
     repositories {
         jcenter()

@@ -39,7 +39,7 @@ import static com.theartofdev.edmodo.cropper.CropImage.getGalleryIntents;
  * If calling from Fragment, override {@link Activity#onActivityResult(int, int, Intent)}
  * and call {@link Fragment#onActivityResult(int, int, Intent)} for your fragment to delegate result
  */
-public class ImagePicker {
+public class ImagePicker implements ImagePickerContract {
     private static final String TAG = "ImagePicker";
     private static final int CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE_WITH_CAMERA = 100;
     private static final int CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE_WITHOUT_CAMERA = 101;
@@ -60,6 +60,7 @@ public class ImagePicker {
     }
 
     @SuppressWarnings("UnusedReturnValue")
+    @Override
     public ImagePicker setWithImageCrop(int aspectRatioX, int aspectRatioY) {
         withCrop = true;
         this.aspectRatioX = aspectRatioX;
@@ -68,6 +69,7 @@ public class ImagePicker {
     }
 
     @SuppressLint("NewApi")
+    @Override
     public void choosePicture(boolean includeCamera) {
         if (needToAskPermissions()) {
             String[] neededPermissions = getNeededPermissions();
@@ -85,13 +87,13 @@ public class ImagePicker {
     }
 
     @SuppressLint("NewApi")
+    @Override
     public void openCamera() {
         if (needToAskPermissions()) {
-            String[] permissions = getNeededPermissions();
             if (fragment != null) {
-                fragment.requestPermissions(permissions, CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
+                fragment.requestPermissions(getNeededPermissions(), CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
             } else {
-                activity.requestPermissions(permissions, CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
+                activity.requestPermissions(getNeededPermissions(), CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE);
             }
         } else {
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -102,23 +104,14 @@ public class ImagePicker {
         }
     }
 
-    private String[] getNeededPermissions() {
-        if (withCrop) {
-            return new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE};
-        } else {
-            return new String[]{Manifest.permission.CAMERA};
-        }
+    @SuppressWarnings({"WeakerAccess", "unused"})
+    @NonNull
+    @Override
+    public File getImageFile() {
+        return imageFile;
     }
 
-    private boolean needToAskPermissions() {
-        if (withCrop) {
-            return ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
-                    || ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
-        } else {
-            return ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED;
-        }
-    }
-
+    @Override
     public void handlePermission(int requestCode, int[] grantResults) {
         Log.d(TAG, "handlePermission: " + requestCode);
         if (requestCode == CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE_WITH_CAMERA) {
@@ -143,6 +136,7 @@ public class ImagePicker {
         }
     }
 
+    @Override
     public void handleActivityResult(int resultCode, int requestCode, Intent data) {
         if (resultCode == RESULT_OK) {
             Log.d(TAG, "handleActivityResult: 1");
@@ -162,10 +156,21 @@ public class ImagePicker {
         }
     }
 
-    @SuppressWarnings({"WeakerAccess", "unused"})
-    @NonNull
-    public File getImageFile() {
-        return imageFile;
+    private String[] getNeededPermissions() {
+        if (withCrop) {
+            return new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE};
+        } else {
+            return new String[]{Manifest.permission.CAMERA};
+        }
+    }
+
+    private boolean needToAskPermissions() {
+        if (withCrop) {
+            return ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+                    || ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED;
+        } else {
+            return ContextCompat.checkSelfPermission(activity, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED;
+        }
     }
 
     private void handleCroppedImageResult(Intent data) {
@@ -250,7 +255,11 @@ public class ImagePicker {
         Log.d(TAG, "openCamera: file exists " + file.exists() + " " + file.toURI().toString());
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        final Uri outputUri = FileProvider.getUriForFile(activity.getApplicationContext(), "com.myhexaville.smartimagepicker", file);
+        String authority = activity.getPackageName() + ".smart-image-picket-provider";
+        final Uri outputUri = FileProvider.getUriForFile(
+                activity.getApplicationContext(),
+                authority,
+                file);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri);
         activity.grantUriPermission(
                 "com.google.android.GoogleCamera",
