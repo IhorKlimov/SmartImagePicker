@@ -7,7 +7,7 @@
 </>
 
 ### Note
-This library is currently unsupported because I've switched my focus to Flutter
+This library is currently unsupported because I've switched my focus to Flutter and don't plan fixing any bugs any time soon
 
 
 ## Usage
