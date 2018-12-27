@@ -47,7 +47,7 @@ public void onRequestPermissionsResult(int requestCode, @NonNull String[] permis
 There's two methods available
 ```java
 imagePicker.openCamera();
-imagePIcker.choosePicture(true /*show camera intents*/);
+imagePicker.choosePicture(true /*show camera intents*/);
 ```
 First one opens camera directly, second shows an intent picker, where user picks from desired application. You can include/exclude camera intents with boolean.
 
